@@ -1,36 +1,68 @@
+import { Layout, Typography, Button, Space } from "antd";
+import { CheckOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import logo from "../assets/img/logo.png";
-import { TbCheckupList } from "react-icons/tb";
 import Sidebar from "../components/Sidebar";
+const { Content } = Layout;
+const { Title, Text } = Typography;
 
 const Home = () => {
   const navigate = useNavigate();
-  return (
-    <div className="flex">
-      <Sidebar />
+  const [theme, setTheme] = useState("dark");
+  const [collapsed, setCollapsed] = useState(false);
 
-      <div className="ml-64 w-full">
-        <div className="flex flex-col items-center justify-center h-96">
-          <img src={logo} alt="Neurofy Logo" className="w-52 pt-10" />
-          <h1 className="text-2xl font-bold pt-5 text-primary-dark">Neurofy</h1>
-          <p className="text-primary-dark">
-            Soluciones integrales al servicio de la neurodiversidad
-          </p>
-        </div>
-        <div className="flex pt-24">
-          <div className="flex flex-col items-center justify-center w-full h-full">
-            <button
-              type="button"
-              className="flex w-96 h-16 justify-center rounded-md bg-primary-light border-primary border-2 text-white px-3 py-4 text-lg font-semibold shadow-sm hover:bg-primary-dark"
+  const handleThemeChange = (newTheme) => {
+    setTheme(newTheme);
+  };
+
+  const handleCollapseChange = (newCollapseState) => {
+    setCollapsed(newCollapseState);
+  };
+
+  return (
+    <Layout style={{ minHeight: "100vh" }}>
+      <Sidebar
+        onThemeChange={handleThemeChange}
+        onCollapseChange={handleCollapseChange}
+      />
+      <Layout
+        style={{
+          marginLeft: collapsed ? 80 : 256,
+          transition: "margin-left 0.3s",
+        }}
+      >
+        <Content
+          style={{
+            padding: 200,
+            background: theme === "dark" ? "#001529" : "#f7f8fa",
+            textAlign: "center",
+          }}
+        >
+          <Space direction="vertical" align="center">
+            <img src={logo} alt="Neurofy Logo" style={{ width: "120px" }} />
+            <Title
+              level={2}
+              style={{ color: theme === "dark" ? "#ffffff" : "#0d3f79" }}
+            >
+              Neurofy
+            </Title>
+            <Text style={{ color: theme === "dark" ? "#ffffff" : "#0d3f79" }}>
+              Soluciones integrales al servicio de la neurodiversidad
+            </Text>
+            <Button
+              type="primary"
+              icon={<CheckOutlined />}
+              size="large"
+              style={{ marginTop: "24px" }}
               onClick={() => navigate("/test")}
             >
-              <TbCheckupList className="text-3xl" />
               Realizar Test
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+            </Button>
+          </Space>
+        </Content>
+      </Layout>
+    </Layout>
   );
 };
 

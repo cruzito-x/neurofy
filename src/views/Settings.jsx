@@ -1,5 +1,9 @@
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
+import { Switch, Layout, Button, Typography } from "antd";
+
+const { Content, Footer } = Layout;
+const { Text } = Typography;
 
 const Settings = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -7,48 +11,79 @@ const Settings = () => {
 
   return (
     <div className="flex">
-    <Sidebar />
-    <div
-      className={`ml-64 w-full ${
-        darkMode ? "bg-primary-dark text-white" : "text-black"
-      } min-h-screen flex flex-col`}
-    >
-      <main className="flex-grow p-4 space-y-6">
-        <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg dark:bg-gray-800">
-          <span>Modo oscuro</span>
-          <label className="relative inline-flex items-center cursor-pointer">
-            <input
-              type="checkbox"
-              className="sr-only peer"
+      <Sidebar />
+      <Layout
+        style={{
+          marginLeft: 256,
+          minHeight: "100vh",
+          backgroundColor: darkMode ? "#001529" : "#ffffff",
+          color: darkMode ? "#ffffff" : "#000000",
+          transition: "0.3s",
+        }}
+      >
+        <Content style={{ padding: "24px", flex: 1 }}>
+          <div
+            style={{
+              backgroundColor: darkMode ? "#002140" : "#f0f2f5",
+              padding: "16px",
+              borderRadius: "8px",
+              marginBottom: "16px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ color: darkMode ? "#ffffff" : "#000000" }}>
+              Modo oscuro
+            </Text>
+            <Switch
               checked={darkMode}
               onChange={() => setDarkMode(!darkMode)}
+              checkedChildren="ON"
+              unCheckedChildren="OFF"
             />
-            <div className="w-11 h-6 bg-primary-dark rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-light"></div>
-          </label>
-        </div>
+          </div>
 
-        <div className="flex items-center justify-between p-4 rounded-lg">
-          <label>Permitir acceso a <span className="font-bold"> "Preguntas Frecuentes" </span></label>
-          <label className="relative inline-flex items-center cursor-pointer">
-            <input
-              type="checkbox"
-              className="sr-only peer"
+          <div
+            style={{
+              backgroundColor: darkMode ? "#002140" : "#f0f2f5",
+              padding: "16px",
+              borderRadius: "8px",
+              marginBottom: "16px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ color: darkMode ? "#ffffff" : "#000000" }}>
+              Permitir acceso a{" "}
+              <span style={{ fontWeight: "bold" }}>"Preguntas Frecuentes"</span>
+            </Text>
+            <Switch
               checked={faqAccess}
               onChange={() => setFaqAccess(!faqAccess)}
+              checkedChildren="ON"
+              unCheckedChildren="OFF"
             />
-            <div className="w-11 h-6 bg-primary-dark rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-light"></div>
-          </label>
-        </div>
-      </main>
+          </div>
+        </Content>
 
-      <footer className="p-4">
-        <button className="w-full py-2 px-4 bg-primary border-2 border-primary-dark text-white rounded-lg hover:bg-primary-dark">
-          Guardar
-        </button>
-      </footer>
-    </div>
+        <Footer style={{ textAlign: "center", padding: "16px" }}>
+          <Button
+            type="primary"
+            size="large"
+            style={{
+              width: "100%",
+              backgroundColor: darkMode ? "#1890ff" : "#001529",
+              borderColor: darkMode ? "#1890ff" : "#001529",
+            }}
+          >
+            Guardar
+          </Button>
+        </Footer>
+      </Layout>
     </div>
   );
-}
+};
 
 export default Settings;
